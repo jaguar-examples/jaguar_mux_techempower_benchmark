@@ -16,4 +16,4 @@ const List<String> kFortunes = const <String>[
   "If you refuse to accept anything but the best, you very often get it.",
   "A smile is your passport into the hearts of others.",
   "Your high-minded principles spell success."
-  ];
+];

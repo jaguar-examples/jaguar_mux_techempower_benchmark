@@ -34,7 +34,7 @@ class FortuneBean {
 
     final List<Fortune> ret = [];
 
-    for(Map map in maps) {
+    for (Map map in maps) {
       final Fortune w = new Fortune();
       w.fromMap(map);
       ret.add(w);
@@ -93,7 +93,7 @@ class WorldBean {
 
     final List<World> ret = [];
 
-    for(Map map in maps) {
+    for (Map map in maps) {
       final World w = new World();
       w.fromMap(map);
       ret.add(w);

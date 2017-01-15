@@ -46,19 +46,25 @@ void groupRaw(mux.Group group) {
       .get('/json', () => {'message': 'Hello, World!'})
       .wrap(const WrapEncodeMapToJson());
 
-  group.get('/db', (@Input(PostgresDb) pg.Connection db) async {
-    final adapter = new PgAdapter.FromConnection(db);
-    final WorldBean bean = new WorldBean(adapter);
-    return await bean.getById(kRandom.nextInt(kWorldTableSize) + 1);
-  }).wrap(new WrapPostgresDb(kPgUrl));
+  group
+      .get('/db', (@Input(PostgresDb) pg.Connection db) async {
+        final adapter = new PgAdapter.FromConnection(db);
+        final WorldBean bean = new WorldBean(adapter);
+        return await bean.getById(kRandom.nextInt(kWorldTableSize) + 1);
+      })
+      .wrap(new WrapPostgresDb(kPgUrl))
+      .wrap(new WrapEncodeJsonableObject());
 
-  group.get('/dbs', (@Input(PostgresDb) pg.Connection db,
-      {int queries: 1}) async {
-    queries = clampNumQueries(queries);
-    final adapter = new PgAdapter.FromConnection(db);
-    final WorldBean bean = new WorldBean(adapter);
-    return await bean.getAll(queries);
-  }).wrap(new WrapPostgresDb(kPgUrl));
+  group
+      .get('/dbs', (@Input(PostgresDb) pg.Connection db,
+          {int queries: 1}) async {
+        queries = clampNumQueries(queries);
+        final adapter = new PgAdapter.FromConnection(db);
+        final WorldBean bean = new WorldBean(adapter);
+        return await bean.getAll(queries);
+      })
+      .wrap(new WrapPostgresDb(kPgUrl))
+      .wrap(new WrapEncodeJsonableList());
 
   group
       .get('/fortune', (@Input(PostgresDb) pg.Connection db) async {
@@ -73,22 +79,25 @@ void groupRaw(mux.Group group) {
       .wrap(new WrapPostgresDb(kPgUrl))
       .wrap(new WrapMustacheStrRender(kFortuneTemplate));
 
-  group.get('/update', (@Input(PostgresDb) pg.Connection db,
-      {int queries: 1}) async {
-    queries = clampNumQueries(queries);
-    final adapter = new PgAdapter.FromConnection(db);
-    final WorldBean bean = new WorldBean(adapter);
-    final List<World> ret = [];
+  group
+      .get('/update', (@Input(PostgresDb) pg.Connection db,
+          {int queries: 1}) async {
+        queries = clampNumQueries(queries);
+        final adapter = new PgAdapter.FromConnection(db);
+        final WorldBean bean = new WorldBean(adapter);
+        final List<World> ret = [];
 
-    for (int count = 0; count < queries; count++) {
-      World w = await bean.getById(kRandom.nextInt(kWorldTableSize)+1);
-      w.randomnumber = kRandom.nextInt(kWorldTableSize) + 1;
-      await bean.updateById(w);
-      ret.add(w);
-    }
+        for (int count = 0; count < queries; count++) {
+          World w = await bean.getById(kRandom.nextInt(kWorldTableSize) + 1);
+          w.randomnumber = kRandom.nextInt(kWorldTableSize) + 1;
+          await bean.updateById(w);
+          ret.add(w);
+        }
 
-    return ret;
-  }).wrap(new WrapPostgresDb(kPgUrl));
+        return ret;
+      })
+      .wrap(new WrapPostgresDb(kPgUrl))
+      .wrap(new WrapEncodeJsonableList());
 }
 
 class Args {

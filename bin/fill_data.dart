@@ -14,9 +14,9 @@ Future<Null> fillWorld(PgAdapter adapter) async {
   // Clear old data
   await bean.deleteAll();
 
-  for(int idx = 0; idx < kWorldTableSize; idx++) {
+  for (int idx = 0; idx < kWorldTableSize; idx++) {
     final World w = new World();
-    w.id = idx+1;
+    w.id = idx + 1;
     w.randomnumber = kRandom.nextInt(kWorldTableSize) + 1;
     await bean.create(w);
   }
@@ -28,9 +28,9 @@ Future<Null> fillFortune(PgAdapter adapter) async {
   // Clear old data
   await bean.deleteAll();
 
-  for(int idx = 0; idx < kWorldTableSize; idx++) {
+  for (int idx = 0; idx < kWorldTableSize; idx++) {
     final Fortune w = new Fortune();
-    w.id = idx+1;
+    w.id = idx + 1;
     w.message = kFortunes[kRandom.nextInt(kFortunes.length)];
     await bean.create(w);
   }
