@@ -4,6 +4,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:jaguar_mux_techempower_benchmark/common/common.dart';
+
 const String kHostname = 'localhost';
 
 const int kPort = 8080;
@@ -49,8 +51,28 @@ Future<Null> execQuery() async {
   printHttpClientResponse(resp);
 }
 
+Future<Null> execQueries() async {
+  final int queries = kRandom.nextInt(kWorldTableSize) + 1;
+  HttpClientRequest req =
+      await _client.get(kHostname, kPort, '/raw/dbs?queries=$queries');
+  HttpClientResponse resp = await req.close();
+
+  printHttpClientResponse(resp);
+}
+
+Future<Null> execUpdate() async {
+  final int queries = kRandom.nextInt(kWorldTableSize) + 1;
+  HttpClientRequest req =
+      await _client.get(kHostname, kPort, '/raw/update?queries=$queries');
+  HttpClientResponse resp = await req.close();
+
+  printHttpClientResponse(resp);
+}
+
 main() async {
   await execJson();
   await execPlainText();
   await execQuery();
+  await execQueries();
+  await execUpdate();
 }

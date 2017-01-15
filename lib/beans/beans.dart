@@ -105,10 +105,9 @@ class WorldBean {
   Future<Null> updateById(final World world) async {
     final UpdateStatement st = new UpdateStatement();
 
-    st
-        .into(tableName)
-        .set(id.set(world.id))
-        .set(randomnumber.set(world.randomnumber));
+    st.into(tableName).set(randomnumber.set(world.randomnumber));
+
+    st.where(id.eq(world.id));
 
     await _adapter.update(st);
   }
