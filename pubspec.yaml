@@ -1,8 +1,11 @@
 name: jaguar_mux_techempower_benchmark
 version: 0.0.1
-description: A sample command-line application.
-#author: teja <email@example.com>
-#homepage: https://www.example.com
+description: Techempower benchmark implementation for jaguar_mux
+
+authors:
+- Ravi Teja Gudapati <tejainece@gmail.com>
+- Kevin Segaud <segaud.kevin@gmail.com>
+homepage: http://jaguar-dart.github.io
 
 environment:
   sdk: '>=1.0.0 <2.0.0'
