@@ -60,6 +60,13 @@ Future<Null> execQueries() async {
   printHttpClientResponse(resp);
 }
 
+Future<Null> execFortune() async {
+  HttpClientRequest req = await _client.get(kHostname, kPort, '/raw/fortune');
+  HttpClientResponse resp = await req.close();
+
+  printHttpClientResponse(resp);
+}
+
 Future<Null> execUpdate() async {
   final int queries = kRandom.nextInt(kWorldTableSize) + 1;
   HttpClientRequest req =
@@ -74,5 +81,6 @@ main() async {
   await execPlainText();
   await execQuery();
   await execQueries();
+  await execFortune();
   await execUpdate();
 }
