@@ -113,7 +113,7 @@ class Args {
 Future<Null> startServer(Args args) async {
   final builder = new mux.MuxBuilder();
 
-  groupRaw(builder.group(pathPrefix: '/raw'));
+  groupRaw(builder.group('/raw'));
 
   mux.Mux muxer = builder.build();
 
