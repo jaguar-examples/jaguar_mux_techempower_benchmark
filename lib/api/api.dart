@@ -117,8 +117,8 @@ Future<Null> startServer(Args args) async {
 
   mux.Mux muxer = builder.build();
 
-  Configuration configuration = new Configuration();
+  Jaguar configuration = new Jaguar();
   configuration.addApi(muxer);
 
-  await serve(configuration);
+  await configuration.serve();
 }
